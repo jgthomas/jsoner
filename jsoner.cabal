@@ -1,0 +1,65 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 3f26ead52e771f9d4600e2ee31b8377acc2bde69ad30b3625f4fd983c12dc5b4
+
+name:           jsoner
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/jgthomas/jsoner#readme>
+homepage:       https://github.com/jgthomas/jsoner#readme
+bug-reports:    https://github.com/jgthomas/jsoner/issues
+author:         James Thomas
+maintainer:     jgtcode@protonmail.com
+copyright:      2020 James Thomas
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/jgthomas/jsoner
+
+library
+  exposed-modules:
+      Validate
+  other-modules:
+      Paths_jsoner
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+    , megaparsec
+  default-language: Haskell2010
+
+executable jsoner-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_jsoner
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , jsoner
+    , megaparsec
+  default-language: Haskell2010
+
+test-suite jsoner-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_jsoner
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , jsoner
+    , megaparsec
+  default-language: Haskell2010
