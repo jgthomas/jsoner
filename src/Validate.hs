@@ -6,8 +6,6 @@ import Text.Megaparsec (Parsec, (<|>))
 import qualified Text.Megaparsec as M
 import qualified Text.Megaparsec.Char as M
 
---import qualified Text.Megaparsec.Combinator as M
-
 type Parser = Parsec Void String
 
 jsonParser :: Parser String
