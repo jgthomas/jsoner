@@ -8,15 +8,26 @@ import qualified Text.Megaparsec.Char as M
 type Parser = Parsec Void String
 
 jsonParser :: Parser String
-jsonParser = do
-  start <- startParser
-  contents <- contentsParser
-  end <- endParser
+jsonParser = emptyBodyParser <|> fullBodyParser
+
+emptyBodyParser :: Parser String
+emptyBodyParser = M.try $ do
+  start <- bodyStartParser
+  end <- bodyEndParser
+  pure [start, end]
+
+fullBodyParser :: Parser String
+fullBodyParser = M.try $ do
+  start <- bodyStartParser
+  contents <- keyValueParser
+  end <- bodyEndParser
   pure $ [start] ++ contents ++ [end]
-  where
-    startParser = M.char '{'
-    contentsParser = keyValueParser
-    endParser = M.char '}'
+
+bodyStartParser :: Parser Char
+bodyStartParser = M.char '{'
+
+bodyEndParser :: Parser Char
+bodyEndParser = M.char '}'
 
 keyValueParser :: Parser String
 keyValueParser = do
