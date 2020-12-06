@@ -40,4 +40,17 @@ keyParser :: Parser String
 keyParser = M.many M.alphaNumChar
 
 valueParser :: Parser String
-valueParser = M.many M.alphaNumChar
+valueParser = bodyValueParser <|> arrayValueParser <|> stringValueParser
+  where
+    stringValueParser :: Parser String
+    stringValueParser = M.try (M.many M.alphaNumChar)
+
+    bodyValueParser :: Parser String
+    bodyValueParser = M.try jsonParser
+
+    arrayValueParser :: Parser String
+    arrayValueParser = M.try $ do
+      start <- M.char '['
+      contents <- M.many M.alphaNumChar
+      end <- M.char ']'
+      pure $ [start] ++ contents ++ [end]
