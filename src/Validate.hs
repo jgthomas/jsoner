@@ -40,7 +40,7 @@ keyValueParser = do
   pure $ key ++ [sep] ++ value
 
 keyParser :: Parser String
-keyParser = M.many M.alphaNumChar
+keyParser = M.some M.alphaNumChar
 
 valueParser :: Parser String
 valueParser = bodyValueParser <|> arrayValueParser <|> stringValueParser
