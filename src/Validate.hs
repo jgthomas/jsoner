@@ -1,4 +1,4 @@
-module Validate (validJson) where
+module Validate (jsonParser) where
 
 import Data.Void (Void)
 import Text.Megaparsec (Parsec, (<|>))
@@ -7,17 +7,17 @@ import qualified Text.Megaparsec.Char as M
 
 type Parser = Parsec Void String
 
-validJson :: Parser String
-validJson = emptyJsonBody
+jsonParser :: Parser String
+jsonParser = emptyBodyParser
 
-emptyJsonBody :: Parser String
-emptyJsonBody = do
-  start <- bodyStart
-  end <- bodyEnd
+emptyBodyParser :: Parser String
+emptyBodyParser = do
+  start <- bodyStartParser
+  end <- bodyEndParser
   pure [start, end]
 
-bodyStart :: Parser Char
-bodyStart = M.char '{'
+bodyStartParser :: Parser Char
+bodyStartParser = M.char '{'
 
-bodyEnd :: Parser Char
-bodyEnd = M.char '}'
+bodyEndParser :: Parser Char
+bodyEndParser = M.char '}'
