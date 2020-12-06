@@ -12,6 +12,12 @@ validJson = emptyJsonBody
 
 emptyJsonBody :: Parser String
 emptyJsonBody = do
-  M.char '{'
-  M.char '}'
-  pure "{}"
+  start <- bodyStart
+  end <- bodyEnd
+  pure [start, end]
+
+bodyStart :: Parser Char
+bodyStart = M.char '{'
+
+bodyEnd :: Parser Char
+bodyEnd = M.char '}'
