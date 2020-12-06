@@ -51,6 +51,6 @@ valueParser = bodyValueParser <|> arrayValueParser <|> stringValueParser
     arrayValueParser :: Parser String
     arrayValueParser = M.try $ do
       start <- M.char '['
-      contents <- M.many M.alphaNumChar
+      contents <- valueParser
       end <- M.char ']'
       pure $ [start] ++ contents ++ [end]
