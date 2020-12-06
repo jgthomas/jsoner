@@ -1,9 +1,12 @@
 module Validate (jsonParser) where
 
+import Data.List (intercalate)
 import Data.Void (Void)
 import Text.Megaparsec (Parsec, (<|>))
 import qualified Text.Megaparsec as M
 import qualified Text.Megaparsec.Char as M
+
+--import qualified Text.Megaparsec.Combinator as M
 
 type Parser = Parsec Void String
 
@@ -51,6 +54,6 @@ valueParser = bodyValueParser <|> arrayValueParser <|> stringValueParser
     arrayValueParser :: Parser String
     arrayValueParser = M.try $ do
       start <- M.char '['
-      contents <- valueParser
+      contents <- M.sepEndBy valueParser (M.char ',')
       end <- M.char ']'
-      pure $ [start] ++ contents ++ [end]
+      pure $ [start] ++ intercalate "," contents ++ [end]
