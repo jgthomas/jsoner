@@ -20,7 +20,7 @@ emptyBodyParser = M.try $ do
 fullBodyParser :: Parser String
 fullBodyParser = M.try $ do
   start <- bodyStartParser
-  contents <- keyValueParser
+  contents <- keyValuesParser
   end <- bodyEndParser
   pure $ [start] ++ contents ++ [end]
 
@@ -29,6 +29,9 @@ bodyStartParser = M.char '{'
 
 bodyEndParser :: Parser Char
 bodyEndParser = M.char '}'
+
+keyValuesParser :: Parser String
+keyValuesParser = concat <$> M.sepEndBy keyValueParser (M.char ',')
 
 keyValueParser :: Parser String
 keyValueParser = do
