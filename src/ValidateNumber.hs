@@ -1,6 +1,6 @@
 module ValidateNumber (numberValueParser) where
 
-import Parser (Parser)
+import Parser (Parser, toStringParser)
 import Text.Megaparsec ((<|>))
 import qualified Text.Megaparsec as M
 import qualified Text.Megaparsec.Char as M
@@ -18,13 +18,13 @@ integerParser = M.try $ posIntegerParser <|> negIntegerParser
     negIntegerParser = do
       neg <- negativeParser
       digits <- posIntegerParser
-      pure $ [neg] <> digits
+      pure $ neg <> digits
 
-signParser :: Parser Char
+signParser :: Parser String
 signParser = positiveParser <|> negativeParser
 
-positiveParser :: Parser Char
-positiveParser = M.char '+'
+positiveParser :: Parser String
+positiveParser = toStringParser $ M.char '+'
 
-negativeParser :: Parser Char
-negativeParser = M.char '-'
+negativeParser :: Parser String
+negativeParser = toStringParser $ M.char '-'
