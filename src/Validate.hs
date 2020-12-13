@@ -41,7 +41,11 @@ keyValueParser = do
   pure $ key ++ [sep] ++ value
 
 keyParser :: Parser String
-keyParser = M.some M.alphaNumChar
+keyParser = do
+  openQuote <- M.char '"'
+  key <- M.some M.alphaNumChar
+  closeQuote <- M.char '"'
+  pure $ [openQuote] <> key <> [closeQuote]
 
 valueParser :: Parser String
 valueParser =
