@@ -16,6 +16,15 @@ integerParser = M.try $ posIntegerParser <|> negIntegerParser
 
     negIntegerParser :: Parser String
     negIntegerParser = do
-      neg <- M.char '-'
+      neg <- negativeParser
       digits <- posIntegerParser
       pure $ [neg] <> digits
+
+signParser :: Parser Char
+signParser = positiveParser <|> negativeParser
+
+positiveParser :: Parser Char
+positiveParser = M.char '+'
+
+negativeParser :: Parser Char
+negativeParser = M.char '-'
