@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 3f26ead52e771f9d4600e2ee31b8377acc2bde69ad30b3625f4fd983c12dc5b4
+-- hash: d2737114535ad03b134f14b021bb87926b08c1f5eee7d4ce7d99075ad8a32f8b
 
 name:           jsoner
 version:        0.1.0.0
@@ -54,12 +54,15 @@ test-suite jsoner-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      ValidateTestSpec
       Paths_jsoner
   hs-source-dirs:
       test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , hspec
+    , hspec-megaparsec
     , jsoner
     , megaparsec
   default-language: Haskell2010
