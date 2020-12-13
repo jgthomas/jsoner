@@ -20,6 +20,14 @@ spec = do
       M.parse numberValueParser "" "-1002"
         `shouldParse` "-1002"
   describe "Valid JSON" $
-    it "Should validate a JSON with negative zeron number value" $
+    it "Should validate a JSON with negative zero number value" $
       M.parse numberValueParser "" "-0"
         `shouldParse` "-0"
+  describe "Valid JSON" $
+    it "Should validate a JSON with negative exponent number value" $
+      M.parse numberValueParser "" "1e-10"
+        `shouldParse` "1e-10"
+  describe "Valid JSON" $
+    it "Should validate a JSON with explicit positive exponent number value" $
+      M.parse numberValueParser "" "1e+10"
+        `shouldParse` "1e+10"
