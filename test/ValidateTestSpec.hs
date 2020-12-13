@@ -35,3 +35,11 @@ spec = do
     it "Should fail validation with unquoted key" $
       M.parse jsonParser "{key:\"value\"}"
         `shouldFailOn` "k"
+  describe "Invalid JSON" $
+    it "Should fail validation with missing key" $
+      M.parse jsonParser "{:\"value\"}"
+        `shouldFailOn` ":"
+  describe "Invalid JSON" $
+    it "Should fail validation with missing value" $
+      M.parse jsonParser "{\"key\":}"
+        `shouldFailOn` "}"
