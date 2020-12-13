@@ -44,7 +44,11 @@ keyParser :: Parser String
 keyParser = M.some M.alphaNumChar
 
 valueParser :: Parser String
-valueParser = bodyValueParser <|> arrayValueParser <|> stringValueParser
+valueParser =
+  booleanValueParser
+    <|> bodyValueParser
+    <|> arrayValueParser
+    <|> stringValueParser
   where
     stringValueParser :: Parser String
     stringValueParser = M.try (M.many M.alphaNumChar)
@@ -58,3 +62,9 @@ valueParser = bodyValueParser <|> arrayValueParser <|> stringValueParser
       contents <- M.sepEndBy valueParser (M.char ',')
       end <- M.char ']'
       pure $ [start] ++ intercalate "," contents ++ [end]
+
+booleanValueParser :: Parser String
+booleanValueParser = M.try $ trueParser <|> falseParser
+  where
+    trueParser = M.string "true"
+    falseParser = M.string "false"
