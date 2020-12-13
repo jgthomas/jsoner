@@ -15,3 +15,7 @@ spec = do
     it "Should validate a JSON with single key-value pair" $
       M.parse jsonParser "" "{\"key\":\"value\"}"
         `shouldParse` "{\"key\":\"value\"}"
+  describe "Invalid JSON" $
+    it "Should fail validation with unquoted key" $
+      M.parse jsonParser "{key:\"value\"}"
+        `shouldFailOn` "k"
