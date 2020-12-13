@@ -46,28 +46,33 @@ keyParser = M.some M.alphaNumChar
 valueParser :: Parser String
 valueParser =
   booleanValueParser
-    <|> bodyValueParser
+    <|> nullValueParser
+    <|> objectValueParser
     <|> arrayValueParser
     <|> stringValueParser
-  where
-    stringValueParser :: Parser String
-    stringValueParser = M.try (M.many M.alphaNumChar)
-
-    bodyValueParser :: Parser String
-    bodyValueParser = M.try jsonParser
-
-    arrayValueParser :: Parser String
-    arrayValueParser = M.try $ do
-      start <- M.char '['
-      contents <- M.sepEndBy valueParser (M.char ',')
-      end <- M.char ']'
-      pure $ [start] ++ intercalate "," contents ++ [end]
 
 booleanValueParser :: Parser String
-booleanValueParser = M.try $ trueParser <|> falseParser
+booleanValueParser = M.try (trueParser <|> falseParser)
   where
     trueParser = M.string "true"
     falseParser = M.string "false"
 
 nullValueParser :: Parser String
-nullValueParser = M.string "null"
+nullValueParser = M.try (M.string "null")
+
+stringValueParser :: Parser String
+stringValueParser = M.try $ do
+  openQuote <- M.char '"'
+  content <- M.many M.alphaNumChar
+  closeQuote <- M.char '"'
+  pure $ [openQuote] <> content <> [closeQuote]
+
+objectValueParser :: Parser String
+objectValueParser = M.try jsonParser
+
+arrayValueParser :: Parser String
+arrayValueParser = M.try $ do
+  start <- M.char '['
+  contents <- M.sepEndBy valueParser (M.char ',')
+  end <- M.char ']'
+  pure $ [start] ++ intercalate "," contents ++ [end]
