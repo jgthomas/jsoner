@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: d2737114535ad03b134f14b021bb87926b08c1f5eee7d4ce7d99075ad8a32f8b
+-- hash: 1f19cd8836563813ed17a4f23f594886f13425dbaa069f6f72f671c521c348fd
 
 name:           jsoner
 version:        0.1.0.0
@@ -27,7 +27,9 @@ source-repository head
 
 library
   exposed-modules:
+      Parser
       Validate
+      ValidateNumber
   other-modules:
       Paths_jsoner
   hs-source-dirs:

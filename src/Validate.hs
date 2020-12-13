@@ -1,12 +1,11 @@
 module Validate (jsonParser) where
 
 import Data.List (intercalate)
-import Data.Void (Void)
+import Parser (Parser)
 import Text.Megaparsec (Parsec, (<|>))
 import qualified Text.Megaparsec as M
 import qualified Text.Megaparsec.Char as M
-
-type Parser = Parsec Void String
+import ValidateNumber (numberValueParser)
 
 jsonParser :: Parser String
 jsonParser = emptyBodyParser <|> fullBodyParser
@@ -75,8 +74,8 @@ stringValueParser = M.try $ do
 objectValueParser :: Parser String
 objectValueParser = M.try jsonParser
 
-numberValueParser :: Parser String
-numberValueParser = M.try $ M.some M.digitChar
+--numberValueParser :: Parser String
+--numberValueParser = M.try $ M.some M.digitChar
 
 arrayValueParser :: Parser String
 arrayValueParser = M.try $ do
