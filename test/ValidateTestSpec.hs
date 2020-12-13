@@ -35,6 +35,14 @@ spec = do
     it "Should validate a JSON with number value" $
       M.parse jsonParser "" "{\"key\":12345}"
         `shouldParse` "{\"key\":12345}"
+  describe "Valid JSON" $
+    it "Should validate a JSON with ZERO number value" $
+      M.parse jsonParser "" "{\"key\":0}"
+        `shouldParse` "{\"key\":0}"
+  describe "Valid JSON" $
+    it "Should validate a JSON with NEGATIVE number value" $
+      M.parse jsonParser "" "{\"key\":-1002}"
+        `shouldParse` "{\"key\":-1002}"
   describe "Invalid JSON" $
     it "Should fail validation with unquoted key" $
       M.parse jsonParser "{key:\"value\"}"
