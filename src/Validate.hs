@@ -54,6 +54,7 @@ valueParser =
     <|> objectValueParser
     <|> arrayValueParser
     <|> stringValueParser
+    <|> numberValueParser
 
 booleanValueParser :: Parser String
 booleanValueParser = M.try (trueParser <|> falseParser)
@@ -73,6 +74,9 @@ stringValueParser = M.try $ do
 
 objectValueParser :: Parser String
 objectValueParser = M.try jsonParser
+
+numberValueParser :: Parser String
+numberValueParser = M.try $ M.some M.digitChar
 
 arrayValueParser :: Parser String
 arrayValueParser = M.try $ do
