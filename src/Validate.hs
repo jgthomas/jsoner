@@ -68,3 +68,6 @@ booleanValueParser = M.try $ trueParser <|> falseParser
   where
     trueParser = M.string "true"
     falseParser = M.string "false"
+
+nullValueParser :: Parser String
+nullValueParser = M.string "null"
