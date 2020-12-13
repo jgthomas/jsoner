@@ -2,7 +2,7 @@ module Validate (jsonParser) where
 
 import Data.List (intercalate)
 import Parser (Parser)
-import Text.Megaparsec (Parsec, (<|>))
+import Text.Megaparsec ((<|>))
 import qualified Text.Megaparsec as M
 import qualified Text.Megaparsec.Char as M
 import ValidateNumber (numberValueParser)
@@ -73,9 +73,6 @@ stringValueParser = M.try $ do
 
 objectValueParser :: Parser String
 objectValueParser = M.try jsonParser
-
---numberValueParser :: Parser String
---numberValueParser = M.try $ M.some M.digitChar
 
 arrayValueParser :: Parser String
 arrayValueParser = M.try $ do
