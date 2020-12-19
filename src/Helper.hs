@@ -1,4 +1,4 @@
-module Helper (spaceParser, nullValueParser) where
+module Helper (spaceParser, lexeme) where
 
 import Control.Applicative (empty)
 import Parser (Parser)
