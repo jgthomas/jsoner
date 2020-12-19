@@ -62,6 +62,7 @@ valueParser = do
 nullValueParser :: Parser String
 nullValueParser = lexeme (M.string "null")
 
+-- | Parse the string 'true' or 'false' followed by any whitespace
 booleanValueParser :: Parser String
 booleanValueParser = M.try (trueParser <|> falseParser)
   where

@@ -17,6 +17,10 @@ spec = do
         `shouldParse` "{\"key\":null}"
   describe "Valid JSON" $
     it "Should validate a null value trailing space" $
+      M.parse jsonParser "" "{\"key\":null  }"
+        `shouldParse` "{\"key\":null}"
+  describe "Valid JSON" $
+    it "Should validate a null value leading and trailing space" $
       M.parse jsonParser "" "{\"key\":  null  }"
         `shouldParse` "{\"key\":null}"
   describe "Invalid JSON" $
