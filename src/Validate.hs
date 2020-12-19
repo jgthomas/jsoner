@@ -1,7 +1,7 @@
 module Validate (jsonParser) where
 
 import Data.List (intercalate)
-import Helper (sc)
+import Helper (nullValueParser, spaceParser)
 import Parser (Parser)
 import Text.Megaparsec ((<|>))
 import qualified Text.Megaparsec as M
@@ -14,7 +14,7 @@ jsonParser = emptyBodyParser <|> fullBodyParser
 emptyBodyParser :: Parser String
 emptyBodyParser = M.try $ do
   start <- bodyStartParser
-  sc
+  spaceParser
   end <- bodyEndParser
   pure [start, end]
 
@@ -49,7 +49,8 @@ keyParser = do
   pure $ [openQuote] <> key <> [closeQuote]
 
 valueParser :: Parser String
-valueParser =
+valueParser = do
+  spaceParser
   booleanValueParser
     <|> nullValueParser
     <|> objectValueParser
@@ -62,9 +63,6 @@ booleanValueParser = M.try (trueParser <|> falseParser)
   where
     trueParser = M.string "true"
     falseParser = M.string "false"
-
-nullValueParser :: Parser String
-nullValueParser = M.try (M.string "null")
 
 stringValueParser :: Parser String
 stringValueParser = M.try $ do
