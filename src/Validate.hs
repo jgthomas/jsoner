@@ -36,8 +36,11 @@ keyValuesParser = concat <$> M.sepEndBy keyValueParser (M.char ',')
 
 keyValueParser :: Parser String
 keyValueParser = do
+  spaceParser
   key <- keyParser
+  spaceParser
   sep <- M.char ':'
+  spaceParser
   value <- valueParser
   pure $ key ++ [sep] ++ value
 
