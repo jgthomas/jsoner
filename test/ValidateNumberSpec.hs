@@ -39,7 +39,3 @@ spec = do
     it "Should validate a JSON with leading zeros exponent number value" $
       M.parse numberValueParser "" "-1e-00010"
         `shouldParse` "-1e-00010"
-  describe "Invalid JSON" $
-    it "Should fail validattion wth leading zeros coefficient number value" $
-      M.parse numberValueParser "01e-00010"
-        `shouldFailOn` "0"
