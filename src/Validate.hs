@@ -65,8 +65,8 @@ nullValueParser = lexeme (M.string "null")
 booleanValueParser :: Parser String
 booleanValueParser = M.try (trueParser <|> falseParser)
   where
-    trueParser = M.string "true"
-    falseParser = M.string "false"
+    trueParser = lexeme (M.string "true")
+    falseParser = lexeme (M.string "false")
 
 stringValueParser :: Parser String
 stringValueParser = M.try $ do

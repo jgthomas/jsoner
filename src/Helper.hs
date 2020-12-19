@@ -9,9 +9,7 @@ import qualified Text.Megaparsec.Char.Lexer as L
 spaceParser :: Parser ()
 spaceParser = L.space M.space1 empty empty
 
+-- | Create parser for element plus trailing whitespace
 lexeme :: Parser a -> Parser a
 lexeme = L.lexeme spaceParser
 
--- | Parse the string null followed by any whitespace
-nullValueParser :: Parser String
-nullValueParser = lexeme (M.string "null")
