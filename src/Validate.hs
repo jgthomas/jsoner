@@ -40,10 +40,10 @@ valueParser = do
   where
     booleanValueParser = M.try $ lexeme (M.string "true" <|> M.string "false")
     nullValueParser = M.try $ lexeme $ M.string "null"
-    objectValueParser = M.try $ lexeme $ jsonParser
-    arrayValueParser = M.try $ lexeme $ arrayParser
+    objectValueParser = M.try $ lexeme jsonParser
+    arrayValueParser = M.try $ lexeme arrayParser
     stringValueParser = M.try $ lexeme stringParser
-    numberValueParser = M.try $ lexeme $ numberParser
+    numberValueParser = M.try $ lexeme numberParser
 
 arrayParser :: Parser String
 arrayParser = do
