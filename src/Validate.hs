@@ -39,10 +39,9 @@ keyValueParser = do
   spaceParser
   key <- keyParser
   spaceParser
-  sep <- M.char ':'
-  spaceParser
+  sep <- separatorParser
   value <- valueParser
-  pure $ key ++ [sep] ++ value
+  pure $ key ++ sep ++ value
 
 keyParser :: Parser String
 keyParser = do
@@ -71,6 +70,9 @@ booleanValueParser = M.try (trueParser <|> falseParser)
   where
     trueParser = lexeme (M.string "true")
     falseParser = lexeme (M.string "false")
+
+separatorParser :: Parser String
+separatorParser = lexeme (M.string ":")
 
 stringValueParser :: Parser String
 stringValueParser = M.try $ do
