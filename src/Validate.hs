@@ -9,6 +9,7 @@ import qualified Text.Megaparsec.Char as M
 import ValidateNumber (numberParser)
 import ValidateString (stringParser)
 
+-- | Validates JSON
 jsonParser :: Parser String
 jsonParser = do
   start <- lexeme $ M.string "{"
