@@ -55,13 +55,10 @@ valueParser = do
   where
     stringValueParser = M.try $ lexeme stringParser
     nullValueParser = M.try $ lexeme $ M.string "null"
-
--- | Parse the string 'true' or 'false' followed by any whitespace
-booleanValueParser :: Parser String
-booleanValueParser = M.try (trueParser <|> falseParser)
-  where
-    trueParser = lexeme (M.string "true")
-    falseParser = lexeme (M.string "false")
+    booleanValueParser = M.try $ lexeme (trueParser <|> falseParser)
+      where
+        trueParser = M.string "true"
+        falseParser = M.string "false"
 
 separatorParser :: Parser String
 separatorParser = lexeme (M.string ":")
