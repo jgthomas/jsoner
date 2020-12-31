@@ -12,6 +12,10 @@ spec = do
       M.parse jsonParser "" "{}"
         `shouldParse` "{}"
   describe "Valid JSON" $
+    it "Should validate an empty JSON internal whitespace" $
+      M.parse jsonParser "" "{   }"
+        `shouldParse` "{}"
+  describe "Valid JSON" $
     it "Should validate a JSON with single string key-value pair" $
       M.parse jsonParser "" "{\"key\":\"value\"}"
         `shouldParse` "{\"key\":\"value\"}"

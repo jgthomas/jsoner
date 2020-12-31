@@ -10,27 +10,11 @@ import ValidateNumber (numberParser)
 import ValidateString (stringParser)
 
 jsonParser :: Parser String
-jsonParser = emptyBodyParser <|> fullBodyParser
-
-emptyBodyParser :: Parser String
-emptyBodyParser = M.try $ do
-  start <- bodyStartParser
-  spaceParser
-  end <- bodyEndParser
-  pure [start, end]
-
-fullBodyParser :: Parser String
-fullBodyParser = M.try $ do
-  start <- bodyStartParser
+jsonParser = do
+  start <- lexeme $ M.string "{"
   contents <- keyValuesParser
-  end <- bodyEndParser
-  pure $ [start] ++ contents ++ [end]
-
-bodyStartParser :: Parser Char
-bodyStartParser = M.char '{'
-
-bodyEndParser :: Parser Char
-bodyEndParser = M.char '}'
+  end <- lexeme $ M.string "}"
+  pure $ start <> contents <> end
 
 keyValuesParser :: Parser String
 keyValuesParser = concat <$> M.sepEndBy keyValueParser (M.char ',')
