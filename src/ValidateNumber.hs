@@ -1,12 +1,12 @@
-module ValidateNumber (numberValueParser) where
+module ValidateNumber (numberParser) where
 
 import Parser (Parser, toStringParser)
 import Text.Megaparsec ((<|>))
 import qualified Text.Megaparsec as M
 import qualified Text.Megaparsec.Char as M
 
-numberValueParser :: Parser String
-numberValueParser = M.try $ exponentParser <|> integerParser
+numberParser :: Parser String
+numberParser = exponentParser <|> integerParser
 
 integerParser :: Parser String
 integerParser = M.try $ posIntegerParser <|> negIntegerParser

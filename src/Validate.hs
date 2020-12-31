@@ -6,7 +6,7 @@ import Parser (Parser)
 import Text.Megaparsec ((<|>))
 import qualified Text.Megaparsec as M
 import qualified Text.Megaparsec.Char as M
-import ValidateNumber (numberValueParser)
+import ValidateNumber (numberParser)
 import ValidateString (stringParser)
 
 jsonParser :: Parser String
@@ -53,13 +53,11 @@ valueParser = do
     <|> stringValueParser
     <|> numberValueParser
   where
-    stringValueParser = M.try $ lexeme stringParser
+    booleanValueParser = M.try $ lexeme (M.string "true" <|> M.string "false")
     nullValueParser = M.try $ lexeme $ M.string "null"
     objectValueParser = M.try $ lexeme $ jsonParser
-    booleanValueParser = M.try $ lexeme (trueParser <|> falseParser)
-      where
-        trueParser = M.string "true"
-        falseParser = M.string "false"
+    stringValueParser = M.try $ lexeme stringParser
+    numberValueParser = M.try $ lexeme $ numberParser
 
 arrayValueParser :: Parser String
 arrayValueParser = M.try $ do
