@@ -39,7 +39,7 @@ keyValueParser :: Parser String
 keyValueParser = do
   spaceParser
   key <- lexeme stringParser
-  sep <- separatorParser
+  sep <- lexeme $ M.string ":"
   value <- valueParser
   pure $ key ++ sep ++ value
 
@@ -55,16 +55,11 @@ valueParser = do
   where
     stringValueParser = M.try $ lexeme stringParser
     nullValueParser = M.try $ lexeme $ M.string "null"
+    objectValueParser = M.try $ lexeme $ jsonParser
     booleanValueParser = M.try $ lexeme (trueParser <|> falseParser)
       where
         trueParser = M.string "true"
         falseParser = M.string "false"
-
-separatorParser :: Parser String
-separatorParser = lexeme (M.string ":")
-
-objectValueParser :: Parser String
-objectValueParser = M.try jsonParser
 
 arrayValueParser :: Parser String
 arrayValueParser = M.try $ do
