@@ -25,9 +25,9 @@ spec = do
         `shouldParse` "{\"key\":null}"
   describe "Invalid JSON" $
     it "Should fail validation with mixed case" $
-      M.parse jsonParser "{\"key\":nUll}"
-        `shouldFailOn` "U"
+      M.parse jsonParser ""
+        `shouldFailOn` "{\"key\":nUll}"
   describe "Invalid JSON" $
     it "Should fail validation with upper case" $
-      M.parse jsonParser "{\"key\":NULL}"
-        `shouldFailOn` "N"
+      M.parse jsonParser ""
+        `shouldFailOn` "{\"key\":NULL}"

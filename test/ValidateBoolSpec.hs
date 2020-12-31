@@ -41,17 +41,17 @@ spec = do
         `shouldParse` "{\"key\":false}"
   describe "Invalid JSON" $
     it "Should fail validation with true mixed case" $
-      M.parse jsonParser "{\"key\":tRue}"
-        `shouldFailOn` "R"
+      M.parse jsonParser ""
+        `shouldFailOn` "{\"key\":tRue}"
   describe "Invalid JSON" $
     it "Should fail validation with false mixed case" $
-      M.parse jsonParser "{\"key\":fAlse}"
-        `shouldFailOn` "A"
+      M.parse jsonParser ""
+        `shouldFailOn` "{\"key\":fAlse}"
   describe "Invalid JSON" $
     it "Should fail validation with true upper case" $
-      M.parse jsonParser "{\"key\":TRUE}"
-        `shouldFailOn` "T"
+      M.parse jsonParser ""
+        `shouldFailOn` "{\"key\":TRUE}"
   describe "Invalid JSON" $
     it "Should fail validation with false upper case" $
-      M.parse jsonParser "{\"key\":FALSE}"
-        `shouldFailOn` "F"
+      M.parse jsonParser ""
+        `shouldFailOn` "{\"key\":FALSE}"
