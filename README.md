@@ -1,1 +1,1 @@
-# jsoner ![](https://github.com/fosskers/aura/workflows/tests/badge.svg)
+# jsoner ![tests](https://github.com/jgthomas/jsoner/workflows/tests/badge.svg)
