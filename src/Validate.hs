@@ -54,10 +54,7 @@ valueParser = do
     <|> numberValueParser
   where
     stringValueParser = M.try $ lexeme stringParser
-
--- | Parse the string null followed by any whitespace
-nullValueParser :: Parser String
-nullValueParser = lexeme (M.string "null")
+    nullValueParser = M.try $ lexeme $ M.string "null"
 
 -- | Parse the string 'true' or 'false' followed by any whitespace
 booleanValueParser :: Parser String
