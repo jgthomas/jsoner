@@ -53,7 +53,7 @@ valueParser = do
     <|> stringValueParser
     <|> numberValueParser
   where
-    stringValueParser = M.try stringParser
+    stringValueParser = M.try $ lexeme stringParser
 
 -- | Parse the string null followed by any whitespace
 nullValueParser :: Parser String
