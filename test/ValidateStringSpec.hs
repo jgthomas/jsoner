@@ -19,6 +19,10 @@ spec = do
     it "Should validate with an escaped back slash" $
       M.parse stringParser "" "\"val\\\\ue\""
         `shouldParse` "\"val\\\\ue\""
+  describe "Valid JSON" $
+    it "Should validate with an escaped double quote" $
+      M.parse stringParser "" "\"val\\\"ue\""
+        `shouldParse` "\"val\\\"ue\""
   describe "Inalid JSON" $
     it "Should fail validation when missing opening quote" $
       M.parse stringParser ""
