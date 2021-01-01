@@ -15,11 +15,11 @@ stringParser = do
   where
     innerCharParser = fmap pure (M.try unEscaped) <|> escaped
 
+unEscaped :: Parser Char
+unEscaped = M.noneOf ['\\', '\"', '/']
+
 escaped :: Parser String
 escaped = do
   d <- M.char '\\'
   c <- M.oneOf ['\\', '\"', '/']
   pure [d, c]
-
-unEscaped :: Parser Char
-unEscaped = M.noneOf ['\\', '\"', '/']
