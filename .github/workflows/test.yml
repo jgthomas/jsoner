@@ -33,10 +33,9 @@
               ${{ runner.os }}-
 
         - name: Build and run tests
-          run: |
-            "stack --no-terminal build --test --pedantic --fast --coverage --system-ghc"
-            "hpcroot=$(stack path --local-hpc-root)"
-            "tix=$(find $hpcroot -name 'jsoner-test.tix')"
-            "mix=$(stack path --dist-dir)/hpc"
-            "hpc-codecov --mix=$mix --exclude=Paths_hpc_codecov -o codecov.json $tix"
-            "bash <(curl -s https://codecov.io/bash)"
+          run: "stack --no-terminal build --test --pedantic --fast --coverage --system-ghc"
+          run: "hpcroot=$(stack path --local-hpc-root)"
+          run: "tix=$(find $hpcroot -name 'jsoner-test.tix')"
+          run: "mix=$(stack path --dist-dir)/hpc"
+          run: "hpc-codecov --mix=$mix --exclude=Paths_hpc_codecov -o codecov.json $tix"
+          run: "bash <(curl -s https://codecov.io/bash)"
