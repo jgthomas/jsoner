@@ -30,4 +30,4 @@
               ${{ runner.os }}-
 
         - name: Build and run tests
-          run: "stack test --fast --no-terminal --system-ghc"
+          run: "stack --no-terminal build --test --pedantic --fast --system-ghc"
