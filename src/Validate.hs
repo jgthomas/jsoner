@@ -35,15 +35,15 @@ valueParser = do
     <|> nullValueParser
     <|> objectValueParser
     <|> arrayValueParser
-    <|> stringValueParser
     <|> numberValueParser
+    <|> stringValueParser
   where
     booleanValueParser = M.try $ lexeme (M.string "true" <|> M.string "false")
     nullValueParser = M.try $ lexeme $ M.string "null"
     objectValueParser = M.try $ lexeme jsonParser
     arrayValueParser = M.try $ lexeme arrayParser
-    stringValueParser = M.try $ lexeme stringParser
     numberValueParser = M.try $ lexeme numberParser
+    stringValueParser = M.try $ lexeme stringParser
 
 arrayParser :: Parser String
 arrayParser = do

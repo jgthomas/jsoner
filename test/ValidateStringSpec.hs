@@ -19,3 +19,15 @@ spec = do
     it "Should fail validation when missing closing quote" $
       M.parse stringParser ""
         `shouldFailOn` "\"value"
+  describe "Inalid JSON" $
+    it "Should fail validation with unescaped forward slash" $
+      M.parse stringParser ""
+        `shouldFailOn` "\"val/ue\""
+  describe "Inalid JSON" $
+    it "Should fail validation with unescaped back slash" $
+      M.parse stringParser ""
+        `shouldFailOn` "\"val\\ue\""
+  describe "Inalid JSON" $
+    it "Should fail validation with unescaped double quote" $
+      M.parse stringParser ""
+        `shouldFailOn` "\"va\"ue\""
