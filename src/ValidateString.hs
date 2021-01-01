@@ -1,6 +1,5 @@
 module ValidateString (stringParser) where
 
-import Data.Char (isAlphaNum)
 import Parser (Parser)
 import Text.Megaparsec ((<|>))
 import qualified Text.Megaparsec as M
