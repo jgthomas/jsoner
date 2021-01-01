@@ -12,7 +12,9 @@ stringParser = do
   closeQuote <- M.char '"'
   pure $ [openQuote] <> concat content <> [closeQuote]
   where
-    innerCharParser = fmap pure (M.try unEscaped) <|> escaped
+    innerCharParser =
+      fmap pure (M.try unEscaped)
+        <|> escaped
 
 unEscaped :: Parser Char
 unEscaped = M.noneOf ['\\', '\"', '/']
