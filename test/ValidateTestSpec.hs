@@ -42,6 +42,16 @@ spec = do
       M.parse jsonParser "" "{\"key1\":\"value\",\"key2\":12345}"
         `shouldParse` "{\"key1\":\"value\",\"key2\":12345}"
 
+  describe "Valid JSON" $
+    it "Should validate a JSON with multiple values with array" $
+      M.parse jsonParser "" "{\"key1\":\"value\",\"key2\":[1,2,3]}"
+        `shouldParse` "{\"key1\":\"value\",\"key2\":[1,2,3]}"
+
+  describe "Valid JSON" $
+    it "Should validate a JSON with multiple values with object" $
+      M.parse jsonParser "" "{\"key1\":\"value\",\"key2\":{\"key3\":123}}"
+        `shouldParse` "{\"key1\":\"value\",\"key2\":{\"key3\":123}}"
+
   describe "Invalid JSON" $
     it "Should fail validation with unquoted key" $
       M.parse jsonParser ""
