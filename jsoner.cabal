@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 5828ebeebbdc0be2799fbda97ce97390ac4b5d30cfd41b6e3310a6092a71a71d
+-- hash: d4ca19d0258d3963c222605db2db2576e56f1586d8fd9f442a7a53e325015819
 
 name:           jsoner
 version:        0.1.0.0
@@ -19,7 +19,6 @@ license-file:   LICENSE
 build-type:     Simple
 extra-source-files:
     README.md
-    ChangeLog.md
 
 source-repository head
   type: git
