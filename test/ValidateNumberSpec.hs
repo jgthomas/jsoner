@@ -46,3 +46,8 @@ spec = do
     it "Should validate a JSON with leading zeros exponent number value" $
       M.parse jsonParser "" "{\"key\":-1e-00010}"
         `shouldParse` "{\"key\":-1e-00010}"
+
+  describe "Valid JSON" $
+    it "Should validate if multidigit coeffcient" $
+      M.parse jsonParser "" "{\"key\":1000e-00010}"
+        `shouldParse` "{\"key\":1000e-00010}"

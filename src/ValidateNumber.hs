@@ -1,38 +1,38 @@
 module ValidateNumber (numberParser) where
 
-import Parser (Parser, toStringParser)
+import Parser (Parser)
 import Text.Megaparsec ((<|>))
 import qualified Text.Megaparsec as M
 import qualified Text.Megaparsec.Char as M
 
 numberParser :: Parser String
-numberParser = exponentParser <|> integerParser
-
-integerParser :: Parser String
-integerParser = M.try $ posIntegerParser <|> negIntegerParser
+numberParser = M.try $ exponentParser <|> integerParser
 
 exponentParser :: Parser String
 exponentParser = M.try $ do
-  coeff <- integerParser
-  e <- toStringParser $ M.char' 'e'
+  coeff <- coeffParser
+  e <- M.char' 'e'
   sign <- signParser
   expon <- M.some M.digitChar
-  pure $ coeff <> e <> sign <> expon
+  pure $ coeff <> [e] <> [sign] <> expon
 
-posIntegerParser :: Parser String
-posIntegerParser = M.try $ M.some M.digitChar
+coeffParser :: Parser String
+coeffParser = M.try $ negParser <|> posParser
+  where
+    posParser = M.some M.digitChar
+    negParser = negativeIntParser
 
-negIntegerParser :: Parser String
-negIntegerParser = M.try $ do
-  neg <- negativeParser
-  digits <- posIntegerParser
-  pure $ neg <> digits
+integerParser :: Parser String
+integerParser = M.try $ negInt <|> posInt
+  where
+    negInt = negativeIntParser
+    posInt = M.some M.digitChar
 
-signParser :: Parser String
-signParser = positiveParser <|> negativeParser
+negativeIntParser :: Parser String
+negativeIntParser = do
+  sign <- signParser
+  digs <- M.some M.digitChar
+  pure $ [sign] <> digs
 
-positiveParser :: Parser String
-positiveParser = toStringParser $ M.char '+'
-
-negativeParser :: Parser String
-negativeParser = toStringParser $ M.char '-'
+signParser :: Parser Char
+signParser = M.oneOf ['-', '+']
