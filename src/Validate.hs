@@ -13,9 +13,9 @@ import ValidateString (stringParser)
 jsonParser :: Parser String
 jsonParser = do
   start <- lexeme $ M.string "{"
-  contents <- concat <$> M.sepEndBy keyValueParser (M.char ',')
+  contents <- M.sepEndBy keyValueParser (M.char ',')
   end <- lexeme $ M.string "}"
-  pure $ start <> contents <> end
+  pure $ start <> intercalate "," contents <> end
 
 keyValueParser :: Parser String
 keyValueParser = do

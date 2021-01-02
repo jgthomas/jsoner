@@ -37,6 +37,11 @@ spec = do
       M.parse jsonParser "" "{   \"key\"  :-1002}"
         `shouldParse` "{\"key\":-1002}"
 
+  describe "Valid JSON" $
+    it "Should validate a JSON with multiple values" $
+      M.parse jsonParser "" "{\"key1\":\"value\",\"key2\":12345}"
+        `shouldParse` "{\"key1\":\"value\",\"key2\":12345}"
+
   describe "Invalid JSON" $
     it "Should fail validation with unquoted key" $
       M.parse jsonParser ""
