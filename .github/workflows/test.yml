@@ -17,9 +17,6 @@
         - name: Clone project
           uses: actions/checkout@v2
 
-        - name: Install packages
-          run: stack install hpc-codecov
-
         - name: Cache dependencies
           uses: actions/cache@v1
           with:
@@ -36,6 +33,7 @@
 
         - name: Send coverage
           run: |
+            stack install hpc-codecov
             hpcroot=$(stack path --local-hpc-root)
             tix=$(find $hpcroot -name 'jsoner-test.tix')
             mix=$(stack path --dist-dir)/hpc
