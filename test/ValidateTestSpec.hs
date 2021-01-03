@@ -43,6 +43,11 @@ spec = do
         `shouldParse` "{\"key1\":\"value\",\"key2\":12345}"
 
   describe "Valid JSON" $
+    it "Should validate a JSON with multiple key-value pairs, space between" $
+      M.parse jsonParser "" "{\"key1\":\"value\"  ,  \"key2\":12345}"
+        `shouldParse` "{\"key1\":\"value\",\"key2\":12345}"
+
+  describe "Valid JSON" $
     it "Should validate a JSON with multiple values with array" $
       M.parse jsonParser "" "{\"key1\":\"value\",\"key2\":[1,2,3]}"
         `shouldParse` "{\"key1\":\"value\",\"key2\":[1,2,3]}"

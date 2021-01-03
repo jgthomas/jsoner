@@ -1,7 +1,7 @@
 module Validate (jsonParser) where
 
 import Data.List (intercalate)
-import Helper (lexeme, spaceParser)
+import Helper (lexeme)
 import Parser (Parser)
 import Text.Megaparsec ((<|>))
 import qualified Text.Megaparsec as M
@@ -13,13 +13,12 @@ import ValidateString (stringParser)
 jsonParser :: Parser String
 jsonParser = do
   start <- lexeme $ M.string "{"
-  contents <- M.sepEndBy keyValueParser (M.char ',')
+  contents <- M.sepEndBy keyValueParser (lexeme $ M.char ',')
   end <- lexeme $ M.string "}"
   pure $ start <> intercalate "," contents <> end
 
 keyValueParser :: Parser String
 keyValueParser = do
-  spaceParser
   key <- lexeme stringParser
   sep <- lexeme $ M.string ":"
   value <- valueParser
