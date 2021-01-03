@@ -1,7 +1,7 @@
 module Validate (jsonParser) where
 
 import Data.List (intercalate)
-import Helper (lexeme)
+import Helper (lexeme, spaceParser)
 import Parser (Parser)
 import Text.Megaparsec ((<|>))
 import qualified Text.Megaparsec as M
@@ -12,6 +12,11 @@ import ValidateString (stringParser)
 -- | Validates JSON
 jsonParser :: Parser String
 jsonParser = do
+  spaceParser
+  jsonParse
+
+jsonParse :: Parser String
+jsonParse = do
   start <- lexeme $ M.string "{"
   contents <- M.sepEndBy keyValueParser (lexeme $ M.char ',')
   end <- lexeme $ M.string "}"
@@ -36,7 +41,7 @@ valueParser =
   where
     booleanValueParser = lexeme (M.string "true" <|> M.string "false")
     nullValueParser = lexeme $ M.string "null"
-    objectValueParser = lexeme jsonParser
+    objectValueParser = lexeme jsonParse
     arrayValueParser = lexeme arrayParser
     numberValueParser = lexeme numberParser
     stringValueParser = lexeme stringParser

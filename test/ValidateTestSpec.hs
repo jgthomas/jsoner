@@ -33,6 +33,11 @@ spec = do
         `shouldParse` "{\"key\":-1002}"
 
   describe "Valid JSON" $
+    it "Should validate a JSON with leading space top-level object" $
+      M.parse jsonParser "" "     {\"key\":-1002}"
+        `shouldParse` "{\"key\":-1002}"
+
+  describe "Valid JSON" $
     it "Should validate a JSON key with leading and trailing space" $
       M.parse jsonParser "" "{   \"key\"  :-1002}"
         `shouldParse` "{\"key\":-1002}"
