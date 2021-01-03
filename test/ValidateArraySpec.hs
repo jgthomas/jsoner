@@ -57,6 +57,11 @@ spec = do
       M.parse jsonParser "" "{\"key\":[\"one\"  ,  \"two\"]}"
         `shouldParse` "{\"key\":[\"one\",\"two\"]}"
 
+  describe "Valid JSON" $
+    it "Should validate a JSON with an array with space before first element" $
+      M.parse jsonParser "" "{\"key\":[   \"one\",\"two\"]}"
+        `shouldParse` "{\"key\":[\"one\",\"two\"]}"
+
   describe "Invalid JSON" $
     it "Should fail validation with missing comma" $
       M.parse jsonParser ""

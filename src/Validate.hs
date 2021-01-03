@@ -48,7 +48,7 @@ valueParser =
 
 arrayParser :: Parser String
 arrayParser = do
-  start <- M.string "["
+  start <- lexeme $ M.char '['
   contents <- M.sepEndBy valueParser (lexeme $ M.char ',')
-  end <- M.string "]"
-  pure $ start <> intercalate "," contents <> end
+  end <- lexeme $ M.char ']'
+  pure $ [start] <> intercalate "," contents <> [end]
