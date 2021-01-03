@@ -18,7 +18,10 @@
           uses: actions/checkout@v2
 
         - name: Install packages
-          run: stack install hpc-codecov
+          run: |
+            mkdir -p ~/.local/bin
+            export PATH=$HOME/.local/bin:$PATH
+            stack install hpc-codecov
 
         - name: Cache dependencies
           uses: actions/cache@v1
