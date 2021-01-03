@@ -1,9 +1,11 @@
 module ValidateNumber (numberParser) where
 
+import Helper (lexeme)
 import Parser (Parser)
 import Text.Megaparsec ((<|>))
 import qualified Text.Megaparsec as M
 import qualified Text.Megaparsec.Char as M
+import qualified Text.Megaparsec.Char.Lexer as L
 
 numberParser :: Parser String
 numberParser = M.try $ exponentParser <|> integerParser
@@ -26,13 +28,16 @@ integerParser :: Parser String
 integerParser = M.try $ negInt <|> posInt
   where
     negInt = negativeIntParser
-    posInt = M.some M.digitChar
+    posInt = show <$> integer
 
 negativeIntParser :: Parser String
 negativeIntParser = do
-  sign <- signParser
-  digs <- M.some M.digitChar
-  pure $ [sign] <> digs
+  neg <- M.char '-'
+  digs <- show <$> integer
+  pure $ [neg] <> digs
 
 signParser :: Parser Char
 signParser = M.oneOf ['-', '+']
+
+integer :: Parser Integer
+integer = lexeme L.decimal
