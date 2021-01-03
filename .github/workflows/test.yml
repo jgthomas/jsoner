@@ -29,7 +29,7 @@
               ${{ runner.os }}-
 
         - name: Run tests
-          run: "stack --no-terminal build --test --pedantic --fast --system-ghc"
+          run: "stack --no-terminal build --test --pedantic --fast --coverage --system-ghc"
 
         - name: Lint
           run: curl -sSL https://raw.github.com/ndmitchell/neil/master/misc/travis.sh | sh -s -- hlint src/ app/
