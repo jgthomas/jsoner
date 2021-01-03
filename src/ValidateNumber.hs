@@ -28,8 +28,8 @@ coeffParser = M.try $ negParser <|> posParser
 integerParser :: Parser String
 integerParser = M.try $ negativeIntParser <|> positiveIntegerParser
   where
-    negativeIntParser = M.try $ M.string "-0" <|> negNumberParser
-    positiveIntegerParser = M.try $ M.string "0" <|> posNumParser
+    negativeIntParser = M.string "-0" <|> negNumberParser
+    positiveIntegerParser = M.string "0" <|> posNumParser
 
 posNumParser :: Parser String
 posNumParser = do
