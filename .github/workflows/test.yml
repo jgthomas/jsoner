@@ -33,3 +33,11 @@
 
         - name: Lint
           run: curl -sSL https://raw.github.com/ndmitchell/neil/master/misc/travis.sh | sh -s -- hlint src/ app/
+
+        - name: Send coverage
+          run: |
+            hpcroot=$(stack path --local-hpc-root)
+            tix=$(find $hpcroot -name 'jsoner-test.tix')
+            mix=$(stack path --dist-dir)/hpc
+            hpc-codecov --mix=$mix --exclude=Paths_hpc_codecov -o codecov.json $tix
+            bash <(curl -s https://codecov.io/bash)
