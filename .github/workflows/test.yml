@@ -19,9 +19,9 @@
 
         - name: Install packages
           run: |
-            mkdir -p ~/.local/bin
-            export PATH=$HOME/.local/bin:$PATH
-            stack --no-terminal --install-ghc test --only-dependencies
+            #mkdir -p ~/.local/bin
+            #export PATH=$HOME/.local/bin:$PATH
+            #stack --no-terminal --install-ghc test --only-dependencies
             stack install hpc-codecov
 
         - name: Cache dependencies
@@ -43,5 +43,5 @@
             hpcroot=$(stack path --local-hpc-root)
             tix=$(find $hpcroot -name 'jsoner-test.tix')
             mix=$(stack path --dist-dir)/hpc
-            hpc-codecov --mix=$mix --exclude=Paths_hpc_codecov -o codecov.json $tix
+            stack-exec -- hpc-codecov --mix=$mix --exclude=Paths_hpc_codecov -o codecov.json $tix
             bash <(curl -s https://codecov.io/bash)
