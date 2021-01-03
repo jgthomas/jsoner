@@ -18,11 +18,7 @@
           uses: actions/checkout@v2
 
         - name: Install packages
-          run: |
-            #mkdir -p ~/.local/bin
-            #export PATH=$HOME/.local/bin:$PATH
-            #stack --no-terminal --install-ghc test --only-dependencies
-            stack install hpc-codecov
+          run: stack install hpc-codecov
 
         - name: Cache dependencies
           uses: actions/cache@v1
