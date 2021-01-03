@@ -73,6 +73,11 @@ spec = do
         `shouldParse` "{\"key1\":\"value\",\"key2\":{\"key3\":123}}"
 
   describe "Invalid JSON" $
+    it "Should fail validation if final element followed by a comma" $
+      M.parse jsonParser ""
+        `shouldFailOn` "{\"key1\":\"value\",\"key2\":{\"key3\":123},}"
+
+  describe "Invalid JSON" $
     it "Should fail validation with unquoted key" $
       M.parse jsonParser ""
         `shouldFailOn` "{key:\"value\"}"

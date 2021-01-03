@@ -18,7 +18,7 @@ jsonParser = do
 jsonParse :: Parser String
 jsonParse = do
   start <- lexeme $ M.string "{"
-  contents <- M.sepEndBy keyValueParser (lexeme $ M.char ',')
+  contents <- M.sepBy keyValueParser (lexeme $ M.char ',')
   end <- lexeme $ M.string "}"
   pure $ start <> intercalate "," contents <> end
 
@@ -49,6 +49,6 @@ valueParser =
 arrayParser :: Parser String
 arrayParser = do
   start <- lexeme $ M.char '['
-  contents <- M.sepEndBy valueParser (lexeme $ M.char ',')
+  contents <- M.sepBy valueParser (lexeme $ M.char ',')
   end <- lexeme $ M.char ']'
   pure $ [start] <> intercalate "," contents <> [end]

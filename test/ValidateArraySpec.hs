@@ -68,6 +68,11 @@ spec = do
         `shouldFailOn` "{\"key\":[\"one\"\"two\"]}"
 
   describe "Invalid JSON" $
+    it "Should fail validation with comma after final value" $
+      M.parse jsonParser ""
+        `shouldFailOn` "{\"key\":[\"one\",\"two\",]}"
+
+  describe "Invalid JSON" $
     it "Should fail validation with missing open bracket" $
       M.parse jsonParser ""
         `shouldFailOn` "{\"key\":\"one\",\"two\"]}"
