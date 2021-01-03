@@ -25,20 +25,21 @@ keyValueParser = do
   pure $ key <> sep <> value
 
 valueParser :: Parser String
-valueParser = do
-  booleanValueParser
-    <|> nullValueParser
-    <|> objectValueParser
-    <|> arrayValueParser
-    <|> numberValueParser
-    <|> stringValueParser
+valueParser =
+  M.try $
+    booleanValueParser
+      <|> nullValueParser
+      <|> objectValueParser
+      <|> arrayValueParser
+      <|> numberValueParser
+      <|> stringValueParser
   where
-    booleanValueParser = M.try $ lexeme (M.string "true" <|> M.string "false")
-    nullValueParser = M.try $ lexeme $ M.string "null"
-    objectValueParser = M.try $ lexeme jsonParser
-    arrayValueParser = M.try $ lexeme arrayParser
-    numberValueParser = M.try $ lexeme numberParser
-    stringValueParser = M.try $ lexeme stringParser
+    booleanValueParser = lexeme (M.string "true" <|> M.string "false")
+    nullValueParser = lexeme $ M.string "null"
+    objectValueParser = lexeme jsonParser
+    arrayValueParser = lexeme arrayParser
+    numberValueParser = lexeme numberParser
+    stringValueParser = lexeme stringParser
 
 arrayParser :: Parser String
 arrayParser = do
