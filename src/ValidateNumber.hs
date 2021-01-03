@@ -26,16 +26,10 @@ coeffParser = M.try $ negParser <|> posParser
       pure $ [neg] <> digs
 
 integerParser :: Parser String
-integerParser = M.try $ negInt <|> posInt
+integerParser = M.try $ negativeIntParser <|> positiveIntegerParser
   where
-    negInt = negativeIntParser
-    posInt = positiveIntegerParser
-
-positiveIntegerParser :: Parser String
-positiveIntegerParser = M.try $ M.string "0" <|> posNumParser
-
-negativeIntParser :: Parser String
-negativeIntParser = M.try $ M.string "-0" <|> negNumberParser
+    negativeIntParser = M.try $ M.string "-0" <|> negNumberParser
+    positiveIntegerParser = M.try $ M.string "0" <|> posNumParser
 
 signParser :: Parser Char
 signParser = M.oneOf ['-', '+']
