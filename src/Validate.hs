@@ -27,7 +27,6 @@ keyValueParser = do
 
 valueParser :: Parser String
 valueParser = do
-  spaceParser
   booleanValueParser
     <|> nullValueParser
     <|> objectValueParser
@@ -45,6 +44,6 @@ valueParser = do
 arrayParser :: Parser String
 arrayParser = do
   start <- M.string "["
-  contents <- M.sepEndBy valueParser (M.char ',')
+  contents <- M.sepEndBy valueParser (lexeme $ M.char ',')
   end <- M.string "]"
   pure $ start <> intercalate "," contents <> end
