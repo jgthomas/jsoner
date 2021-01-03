@@ -5,7 +5,7 @@
         - "**/README.md"
   jobs:
     build:
-      name: CI
+      name: Build and test
       runs-on: ubuntu-latest
       steps:
         - name: Setup GHC
@@ -25,5 +25,8 @@
             restore-keys: |
               ${{ runner.os }}-
 
-        - name: Build and run tests
+        - name: Run tests
           run: "stack --no-terminal build --test --pedantic --fast --system-ghc"
+
+        - name: Lint
+          run: curl -sSL https://raw.github.com/ndmitchell/neil/master/misc/travis.sh | sh -s -- hlint src/ app/
