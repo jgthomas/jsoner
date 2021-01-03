@@ -38,7 +38,7 @@ spec = do
         `shouldParse` "{\"key\":1e-10}"
 
   describe "Valid JSON" $
-    it "Should validate a JSON with negative coefficient exponent number value" $
+    it "Should validate a JSON with negative coefficient and exponent" $
       M.parse jsonParser "" "{\"key\":-1e-10}"
         `shouldParse` "{\"key\":-1e-10}"
 
@@ -61,3 +61,8 @@ spec = do
     it "Should fail validation if using positive sign with positive number" $
       M.parse jsonParser ""
         `shouldFailOn` "{\"key\":+1000}"
+
+  describe "Invalid JSON" $
+    it "Should fail validation with explicitly positive coefficient" $
+      M.parse jsonParser ""
+        `shouldFailOn` "{\"key\":+1e+10}"
