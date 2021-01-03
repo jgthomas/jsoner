@@ -31,9 +31,6 @@ integerParser = M.try $ negativeIntParser <|> positiveIntegerParser
     negativeIntParser = M.try $ M.string "-0" <|> negNumberParser
     positiveIntegerParser = M.try $ M.string "0" <|> posNumParser
 
-signParser :: Parser Char
-signParser = M.oneOf ['-', '+']
-
 posNumParser :: Parser String
 posNumParser = do
   first <- positiveDigit
@@ -48,3 +45,6 @@ negNumberParser = do
 
 positiveDigit :: Parser Char
 positiveDigit = M.oneOf ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+
+signParser :: Parser Char
+signParser = M.oneOf ['-', '+']
