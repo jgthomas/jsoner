@@ -51,3 +51,13 @@ spec = do
     it "Should validate if multidigit coeffcient" $
       M.parse jsonParser "" "{\"key\":1000e-00010}"
         `shouldParse` "{\"key\":1000e-00010}"
+
+  describe "Invalid JSON" $
+    it "Should fail validation with positive zero number value" $
+      M.parse jsonParser ""
+        `shouldFailOn` "{\"key\":+0}"
+
+  describe "Invalid JSON" $
+    it "Should fail validation if using positive sign with positive number" $
+      M.parse jsonParser ""
+        `shouldFailOn` "{\"key\":+1000}"

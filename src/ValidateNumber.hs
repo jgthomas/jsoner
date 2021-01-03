@@ -22,7 +22,10 @@ coeffParser :: Parser String
 coeffParser = M.try $ negParser <|> posParser
   where
     posParser = M.some M.digitChar
-    negParser = negativeIntParser
+    negParser = do
+      neg <- M.char '-'
+      digs <- M.some M.digitChar
+      pure $ [neg] <> digs
 
 integerParser :: Parser String
 integerParser = M.try $ negInt <|> posInt
