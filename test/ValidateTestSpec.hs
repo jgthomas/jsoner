@@ -38,6 +38,11 @@ spec = do
         `shouldParse` "{\"key\":-1002}"
 
   describe "Valid JSON" $
+    it "Should validate a JSON with trailing space top-level object" $
+      M.parse jsonParser "" "{\"key\":-1002}     "
+        `shouldParse` "{\"key\":-1002}"
+
+  describe "Valid JSON" $
     it "Should validate a JSON key with leading and trailing space" $
       M.parse jsonParser "" "{   \"key\"  :-1002}"
         `shouldParse` "{\"key\":-1002}"
@@ -60,6 +65,11 @@ spec = do
   describe "Valid JSON" $
     it "Should validate a JSON with multiple values with object" $
       M.parse jsonParser "" "{\"key1\":\"value\",\"key2\":{\"key3\":123}}"
+        `shouldParse` "{\"key1\":\"value\",\"key2\":{\"key3\":123}}"
+
+  describe "Valid JSON" $
+    it "Should validate a JSON with multiple values with object and space between" $
+      M.parse jsonParser "" "{\"key1\":\"value\",\"key2\":   {\"key3\":123}}   "
         `shouldParse` "{\"key1\":\"value\",\"key2\":{\"key3\":123}}"
 
   describe "Invalid JSON" $
