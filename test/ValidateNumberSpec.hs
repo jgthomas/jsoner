@@ -66,3 +66,13 @@ spec = do
     it "Should fail validation with explicitly positive coefficient" $
       M.parse jsonParser ""
         `shouldFailOn` "{\"key\":+1e+10}"
+
+  describe "Invalid JSON" $
+    it "Should fail validation if multiple zeros" $
+      M.parse jsonParser ""
+        `shouldFailOn` "{\"key\":000}"
+
+  describe "Invalid JSON" $
+    it "Should fail validation if multiple zeros with following number" $
+      M.parse jsonParser ""
+        `shouldFailOn` "{\"key\":0001}"
