@@ -37,6 +37,11 @@ spec = do
       M.parse jsonParser "" "{\"key\":\"value\\uAABBzzxx\"}"
         `shouldParse` "{\"key\":\"value\\uAABBzzxx\"}"
 
+  describe "Valid JSON" $
+    it "Should validate with just a hex number" $
+      M.parse jsonParser "" "{\"key\":\"\\uAABB\"}"
+        `shouldParse` "{\"key\":\"\\uAABB\"}"
+
   describe "Inalid JSON" $
     it "Should fail validation when missing opening quote" $
       M.parse jsonParser ""
