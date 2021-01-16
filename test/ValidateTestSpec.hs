@@ -18,6 +18,16 @@ spec = do
         `shouldParse` "{}"
 
   describe "Valid JSON" $
+    it "Should validate a JSON with empty key" $
+      M.parse jsonParser "" "{\"\":\"value\"}"
+        `shouldParse` "{\"\":\"value\"}"
+
+  describe "Valid JSON" $
+    it "Should validate a JSON with empty key with space" $
+      M.parse jsonParser "" "{\"  \":\"value\"}"
+        `shouldParse` "{\"  \":\"value\"}"
+
+  describe "Valid JSON" $
     it "Should validate a JSON with empty value" $
       M.parse jsonParser "" "{\"key\":\"\"}"
         `shouldParse` "{\"key\":\"\"}"
