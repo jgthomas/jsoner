@@ -15,7 +15,7 @@ stringParser = do
   where
     innerCharParser =
       fmap pure (M.try unEscaped)
-        <|> (M.try hexParser)
+        <|> M.try hexParser
         <|> escaped
 
 unEscaped :: Parser Char
@@ -37,7 +37,7 @@ hexParser = do
   pure $ escape <> [n0, n1, n2, n3]
 
 hexDigit :: Parser Char
-hexDigit = (hexLetterDigit <|> M.digitChar)
+hexDigit = hexLetterDigit <|> M.digitChar
 
 hexLetterDigit :: Parser Char
 hexLetterDigit = M.satisfy isHexLetterDigit
