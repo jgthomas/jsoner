@@ -23,6 +23,11 @@ spec = do
         `shouldParse` "{\"key\":\"\"}"
 
   describe "Valid JSON" $
+    it "Should validate a JSON with empty value with space" $
+      M.parse jsonParser "" "{\"key\":\"  \"}"
+        `shouldParse` "{\"key\":\"  \"}"
+
+  describe "Valid JSON" $
     it "Should validate a JSON key with leading space" $
       M.parse jsonParser "" "{   \"key\":-1002}"
         `shouldParse` "{\"key\":-1002}"
