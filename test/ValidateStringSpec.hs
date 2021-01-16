@@ -27,6 +27,16 @@ spec = do
       M.parse jsonParser "" "{\"key\":\"val\\\"ue\"}"
         `shouldParse` "{\"key\":\"val\\\"ue\"}"
 
+  describe "Valid JSON" $
+    it "Should validate with a hex number" $
+      M.parse jsonParser "" "{\"key\":\"value\\uAABB\"}"
+        `shouldParse` "{\"key\":\"value\\uAABB\"}"
+
+  describe "Valid JSON" $
+    it "Should validate with a hex number followed by non-hex" $
+      M.parse jsonParser "" "{\"key\":\"value\\uAABBzzxx\"}"
+        `shouldParse` "{\"key\":\"value\\uAABBzzxx\"}"
+
   describe "Inalid JSON" $
     it "Should fail validation when missing opening quote" $
       M.parse jsonParser ""
@@ -51,3 +61,13 @@ spec = do
     it "Should fail validation with unescaped double quote" $
       M.parse jsonParser ""
         `shouldFailOn` "{\"key\":\"va\"ue\"}"
+
+  describe "Valid JSON" $
+    it "Should fail validation with a short hex number" $
+      M.parse jsonParser ""
+        `shouldFailOn` "{\"key\":\"value\\uAAB\"}"
+
+  describe "Valid JSON" $
+    it "Should fail validation with non-hex number" $
+      M.parse jsonParser ""
+        `shouldFailOn` "{\"key\":\"value\\uZZXX\"}"

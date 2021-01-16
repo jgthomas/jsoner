@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 5a4da89050ab1f4a6c30f09cfbd731cc1bdd658213060ad3ce70a2f00bb4ccf0
+-- hash: d4ca19d0258d3963c222605db2db2576e56f1586d8fd9f442a7a53e325015819
 
 name:           jsoner
 version:        0.1.0.0
@@ -29,7 +29,6 @@ library
       Helper
       Parser
       Validate
-      ValidateHex
       ValidateNumber
       ValidateString
   other-modules:

@@ -4,11 +4,10 @@ import Parser (Parser)
 import Text.Megaparsec ((<|>))
 import qualified Text.Megaparsec as M
 import qualified Text.Megaparsec.Char as M
-import ValidateHex (hexParser)
 
 -- | Parse a number value
 numberParser :: Parser String
-numberParser = M.try $ exponentParser <|> integerParser <|> hexParser
+numberParser = M.try $ exponentParser <|> integerParser
 
 exponentParser :: Parser String
 exponentParser = M.try $ do

@@ -1,5 +1,6 @@
 module ValidateString (stringParser) where
 
+import Data.Char (toLower)
 import Parser (Parser)
 import Text.Megaparsec ((<|>))
 import qualified Text.Megaparsec as M
@@ -14,6 +15,7 @@ stringParser = do
   where
     innerCharParser =
       fmap pure (M.try unEscaped)
+        <|> (M.try hexParser)
         <|> escaped
 
 unEscaped :: Parser Char
@@ -24,3 +26,21 @@ escaped = do
   d <- M.char '\\'
   c <- M.oneOf ['\\', '\"', '/']
   pure [d, c]
+
+hexParser :: Parser String
+hexParser = do
+  escape <- M.string "\\u"
+  n0 <- hexDigit
+  n1 <- hexDigit
+  n2 <- hexDigit
+  n3 <- hexDigit
+  pure $ escape <> [n0, n1, n2, n3]
+
+hexDigit :: Parser Char
+hexDigit = (hexLetterDigit <|> M.digitChar)
+
+hexLetterDigit :: Parser Char
+hexLetterDigit = M.satisfy isHexLetterDigit
+
+isHexLetterDigit :: Char -> Bool
+isHexLetterDigit c = toLower c `elem` ['a', 'b', 'c', 'd', 'e', 'f']
