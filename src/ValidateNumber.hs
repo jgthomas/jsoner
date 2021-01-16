@@ -7,7 +7,10 @@ import qualified Text.Megaparsec.Char as M
 
 -- | Parse a number value
 numberParser :: Parser String
-numberParser = M.try $ exponentParser <|> integerParser
+numberParser =
+  exponentParser
+    <|> fractionParser
+    <|> integerParser
 
 exponentParser :: Parser String
 exponentParser = M.try $ do
@@ -31,6 +34,13 @@ integerParser = M.try $ negativeIntParser <|> positiveIntegerParser
   where
     negativeIntParser = M.string "-0" <|> negNumberParser
     positiveIntegerParser = M.string "0" <|> posNumParser
+
+fractionParser :: Parser String
+fractionParser = M.try $ do
+  whole <- M.digitChar
+  dot <- M.char '.'
+  decimal <- M.some M.digitChar
+  pure $ [whole, dot] <> decimal
 
 posNumParser :: Parser String
 posNumParser = do

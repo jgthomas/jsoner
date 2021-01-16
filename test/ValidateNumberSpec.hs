@@ -52,6 +52,16 @@ spec = do
       M.parse jsonParser "" "{\"key\":1000e-00010}"
         `shouldParse` "{\"key\":1000e-00010}"
 
+  describe "Valid JSON" $
+    it "Should validate if basic decimal" $
+      M.parse jsonParser "" "{\"key\":1.10}"
+        `shouldParse` "{\"key\":1.10}"
+
+  describe "Valid JSON" $
+    it "Should validate if basic decimal zero whole number" $
+      M.parse jsonParser "" "{\"key\":0.10}"
+        `shouldParse` "{\"key\":0.10}"
+
   describe "Invalid JSON" $
     it "Should fail validation with positive zero number value" $
       M.parse jsonParser ""
@@ -76,3 +86,13 @@ spec = do
     it "Should fail validation if multiple zeros with following number" $
       M.parse jsonParser ""
         `shouldFailOn` "{\"key\":0001}"
+
+  describe "Invalid JSON" $
+    it "Should fail validation if missing whole number" $
+      M.parse jsonParser ""
+        `shouldFailOn` "{\"key\":.10}"
+
+  describe "Invalid JSON" $
+    it "Should fail validation if missing decimal" $
+      M.parse jsonParser ""
+        `shouldFailOn` "{\"key\":1.}"
