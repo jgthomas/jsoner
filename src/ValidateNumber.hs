@@ -45,7 +45,10 @@ negNumberParser = do
   pure $ [neg] <> num
 
 positiveDigit :: Parser Char
-positiveDigit = M.oneOf ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+positiveDigit = M.satisfy isPositiveDigit
 
 signParser :: Parser Char
 signParser = M.oneOf ['-', '+']
+
+isPositiveDigit :: Char -> Bool
+isPositiveDigit c = c `elem` ['1', '2', '3', '4', '5', '6', '7', '8', '9']
