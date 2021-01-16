@@ -52,6 +52,36 @@ spec = do
       M.parse jsonParser "" "{\"key\":1000e-00010}"
         `shouldParse` "{\"key\":1000e-00010}"
 
+  describe "Valid JSON" $
+    it "Should validate hex value letters lower case" $
+      M.parse jsonParser "" "{\"key\":\"\\uabcdef\"}"
+        `shouldParse` "{\"key\":\"\\uabcdef\"}"
+
+  describe "Valid JSON" $
+    it "Should validate hex value letters upper case" $
+      M.parse jsonParser "" "{\"key\":\"\\uABCDEF\"}"
+        `shouldParse` "{\"key\":\"\\uABCDEF\"}"
+
+  describe "Valid JSON" $
+    it "Should validate hex value letters mixed case" $
+      M.parse jsonParser "" "{\"key\":\"\\uAbCdeF\"}"
+        `shouldParse` "{\"key\":\"\\uAbCdeF\"}"
+
+  describe "Valid JSON" $
+    it "Should validate hex value letters lower case and numbers" $
+      M.parse jsonParser "" "{\"key\":\"\\ua0cd1f\"}"
+        `shouldParse` "{\"key\":\"\\ua0cd1f\"}"
+
+  describe "Valid JSON" $
+    it "Should validate hex value letters upper case and numbers" $
+      M.parse jsonParser "" "{\"key\":\"\\u12CDE0\"}"
+        `shouldParse` "{\"key\":\"\\u12CDE0\"}"
+
+  describe "Valid JSON" $
+    it "Should validate hex value letters mixed case and numbers" $
+      M.parse jsonParser "" "{\"key\":\"\\uA0Cd1F\"}"
+        `shouldParse` "{\"key\":\"\\uA0Cd1F\"}"
+
   describe "Invalid JSON" $
     it "Should fail validation with positive zero number value" $
       M.parse jsonParser ""
@@ -76,3 +106,8 @@ spec = do
     it "Should fail validation if multiple zeros with following number" $
       M.parse jsonParser ""
         `shouldFailOn` "{\"key\":0001}"
+
+  describe "Valid JSON" $
+    it "Should fail validation invalid hex letters" $
+      M.parse jsonParser ""
+        `shouldFailOn` "{\"key\":\"\\uz0Cd1F\"}"
